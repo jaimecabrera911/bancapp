@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="/fragments/template :: head"> </head>
+
+  <body>
+    <header th:replace="fragments/menu :: navbar"></header>
+    <div class="container">
+   		 <h1 class="text-center">Cuentas</h1>
+   		       <a class="btn btn-primary" 
+      th:href="@{/movimientos/form}" 
+      th:if="${session.usuario.rol=='CLIENTE'}"
+        ><i class="fas fa-plus-circle"></i
+      ></a>
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark text-center">
+          <tr>
+            <th scope="col">Código Cuenta</th>
+            <th scope="col">Cédula</th>
+             <th scope="col">Tipo Cuenta</th>
+             <th scope="col">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="cuenta:${cuentas}">
+            <th scope="row" th:text="${cuenta.cuenta.codigo}"></th>
+            <td th:text="${cuenta.cuenta.nombreCta}"></td>
+            <td th:text="${cuenta.cuenta.estado?'Activa':'Inactiva'}"></td>
+            <td>
+            	<a class="btn btn-primary" th:href="@{/movimientos/{codigo} (codigo=${cuenta.cuenta.codigo})}"><i class="fas fa-file-alt"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <i class="bi bi-alarm-fill"></i>
+    <th:block th:replace="/fragments/template :: scripts"> </th:block>
+  </body>
+</html>
